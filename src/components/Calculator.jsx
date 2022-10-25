@@ -23,10 +23,41 @@ export default class Calculator extends Component {
     state = {...initialState}
    clearMemory(){
     this.setState({...initialState});
+    const red = document.querySelector(".red");
+    red.style.background = "red"
+    setTimeout(() => {
+        red.style.background = "rgb(54, 5, 5)"
+    }, 1000);
    }
 
    setOperation(operation) {
-    console.log(operation);
+    const green = document.querySelector(".green")
+    if(operation === "="){
+    green.style.background = "greenyellow"
+}
+
+setTimeout(() => {
+    green.style.background = "rgb(9, 54, 9)"
+}, 3000);
+    if (this.state.current === 0){
+        this.setState({ operation, current: 1, clearDisplay: true})
+    }
+    else{
+        const equals = operation === '='
+        const currentOperation = this.state.operation
+
+        const values = [...this.state.values]
+        values[0] = eval(`${values[0]} ${currentOperation} ${values[1]}` )
+        if (operation != "=" && values.length === 2) {
+            alert("Apenas 2 expressões")
+            window.location.reload()
+        }
+    this.setState({
+        displayValue: values[0],
+        operation: equals ? null : operation,
+        current: equals ? 0 : 1
+    })
+    } 
    }
    
    addDigit(n) {
@@ -47,13 +78,19 @@ export default class Calculator extends Component {
         values[i] = newValue
         this.setState({values})
     }
+    const yellow = document.querySelector(".yellow");
+    yellow.style.background = "yellow"
+
+     setTimeout(()=>{
+        yellow.style.background = "rgb(92, 92, 12)"
+     }, 3000)
 }
 
     render() {
         return(
             <div className='calculator' id='calculator'>
              <Display value={this.state.displayValue} />
-             <Button label="AC" click = {this.clearMemory} triple/>
+             <Button label="AC"  click = {this.clearMemory} triple/>
              <Button label="/" click = {this.setOperation} operation />
              <Button label="7" click = {this.addDigit}/>
              <Button label="8" click = {this.addDigit}/>
