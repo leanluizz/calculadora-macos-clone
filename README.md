@@ -24,6 +24,7 @@ npm i
 ```bash
 npm start
 ```
+Projeto: <a href='http://localhost:3000'>Calculadora</a>
 
 ## Conclusão 
 
